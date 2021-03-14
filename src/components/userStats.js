@@ -1,7 +1,15 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import ghpolyglot from 'gh-polyglot'
 
 const userStats = ({user}) => {
+    console.log({user})
+    const me = new ghpolyglot(`${user.login}`)
+
+    me.userStats(function(err, stats){
+        console.log(err||stats)
+    })
+
     return (
         <>
             <h1>{user.login}</h1>
