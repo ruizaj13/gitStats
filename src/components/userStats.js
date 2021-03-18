@@ -2,6 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import ghpolyglot from 'gh-polyglot'
 
+//TODO: GET CHART.JS WORKING WITH POLYGLOT DATA AND LOOK INTO THE GIT GRAPH NPM PACKAGE
+
 const userStats = ({user}) => {
     console.log({user})
     const me = new ghpolyglot(`${user.login}`)
