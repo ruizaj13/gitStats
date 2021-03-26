@@ -1,16 +1,23 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
 import ghpolyglot from 'gh-polyglot'
+import Graph from './GitGraph'
 
 //TODO: GET CHART.JS WORKING WITH POLYGLOT DATA AND LOOK INTO THE GIT GRAPH NPM PACKAGE
 
-const userStats = ({user}) => {
+const UserStats = ({user}) => {
+    const [stats, setStats] = useState()
     console.log({user})
     const me = new ghpolyglot(`${user.login}`)
 
-    me.userStats(function(err, stats){
+    useEffect(() => {
+        me.userStats(function(err, stats){
         console.log(err||stats)
+        setStats(stats)
+        }) 
     })
+ 
+    console.log(stats)
 
     return (
         <>
@@ -20,6 +27,7 @@ const userStats = ({user}) => {
             <h2>{user.following}</h2>
             <h2>{user.hireable ? 'Open To Work' : ''}</h2>
             <h2>{user.location}</h2>
+            <Graph/>
         </>
     )
 }
@@ -28,4 +36,4 @@ const mapStateToProps = state => {
     return {user: state.user}
 }
 
-export default connect(mapStateToProps)(userStats);
+export default connect(mapStateToProps)(UserStats);

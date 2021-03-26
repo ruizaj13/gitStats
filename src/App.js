@@ -1,6 +1,6 @@
 import React from 'react'
 import {Route, Switch} from 'react-router-dom'
-import userStats from './components/userStats'
+import UserStats from './components/userStats'
 import LandingPage from './components/LandingPage'
 import Particles from 'react-particles-js'
 import particleStyle from './assets/particles-style'
@@ -12,7 +12,7 @@ function App() {
     <>
       <Switch>
         <Route exact path='/' component={LandingPage}/>
-        <Route exact path='/userStats' component={userStats}/>
+        <Route exact path='/userStats' component={UserStats}/>
       </Switch>
         <Particles params={particleStyle}/>
     </>
