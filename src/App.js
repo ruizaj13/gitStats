@@ -4,7 +4,7 @@ import UserStats from './components/userStats'
 import LandingPage from './components/LandingPage'
 import Particles from 'react-particles-js'
 import particleStyle from './assets/particles-style'
-
+import 'antd/dist/antd.css'
 
 
 function App() {
