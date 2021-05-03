@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import ghpolyglot from 'gh-polyglot';
 import { Collapse } from 'antd';
-import { red } from '@material-ui/core/colors';
 
 //TODO: GET CHART.JS WORKING WITH POLYGLOT DATA AND LOOK INTO THE GIT GRAPH NPM PACKAGE
 
