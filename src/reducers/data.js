@@ -6,7 +6,6 @@ export const initialState = {
 }
 
 export const userDataReducer = (state = initialState, action) => {
-    console.log(state.user)
 
     switch(action.type){
         case FETCH_USER:
@@ -23,4 +22,5 @@ export const userDataReducer = (state = initialState, action) => {
             return state
     }
 }
+
 

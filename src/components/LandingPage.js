@@ -1,11 +1,11 @@
-import React, {useState} from 'react'
-import {useHistory} from 'react-router-dom'
+import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
-import {connect} from 'react-redux'
-import {getUser} from '../actions/actions'
+import { connect } from 'react-redux'
+import { getUser } from '../actions/actions'
 
-import {TextField, InputAdornment, Fade} from '@material-ui/core'
-import {makeStyles} from '@material-ui/core/styles'
+import { TextField, InputAdornment, Fade } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 import GitHubIcon from '@material-ui/icons/GitHub'
 import img from '../assets/octocat.gif'
 
@@ -60,7 +60,7 @@ const LandingPage = props => {
 }
 
 const mapStateToProps = state => {
-    return {user: {...state.user}, error: state.error}
+    return {user: { ...state.user }, error: state.error}
 }
 
 export default connect(mapStateToProps, {getUser})(LandingPage);
