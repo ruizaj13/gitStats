@@ -3,20 +3,15 @@ import axios from 'axios';
 import Styled from 'styled-components';
 import { connect } from 'react-redux';
 import ghpolyglot from 'gh-polyglot';
-import { Collapse, Tooltip } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
+import { Collapse, Tooltip, Pagination, Avatar } from 'antd';
+import { LoadingOutlined, UserOutlined } from '@ant-design/icons';
 
 const { Panel } = Collapse;
 
-const ProfilePic = Styled.img`
-width: 17%;
-margin-top: 1%;
-margin-left: 1%;
-`
-
 const Username = Styled.h1`
-margin-left: 1%;
+margin-left: 3%;
 font-size: 200%;
+font-style: bold;
 `
 
 const Followers = Styled(Collapse)`
@@ -38,7 +33,9 @@ margin: 2%;
 const UserStats = ({ user }) => {
     const [stats, setStats] = useState()
     const [followers, setFollowers] = useState()
+    const [following, setFollowing] = useState()
     const [loading, setLoading] = useState(true);
+    const [loading2, setLoading2] = useState(true);
     console.log(user)
     
 
@@ -48,6 +45,18 @@ const UserStats = ({ user }) => {
         .then( res => {
             setFollowers(res.data)
             setLoading(false)
+        })
+        .catch( err => {
+            console.log(err.message)
+        })
+    }, [user.login]);
+
+    useEffect( () => {
+        axios
+        .get(`https://api.github.com/users/${user.login}/following`)
+        .then( res => {
+            setFollowing(res.data)
+            setLoading2(false)
         })
         .catch( err => {
             console.log(err.message)
@@ -69,25 +78,39 @@ const UserStats = ({ user }) => {
 
     return (
         <>
-            <ProfilePic src={user.avatar_url} alt=''/>
+            <Avatar src={user.avatar_url} alt='' size={264} style={{marginTop: '1%', marginLeft: '1%'}} />
             <Username>@{user.login}</Username>
             <div>
                 <Followers accordion>
-                    <FollowersPanel header={`Followers: ${user.followers}`}>
+                    <FollowersPanel header={`Followers: ${user.followers}`} forceRender={'true'}>
                         {loading ? <LoadingOutlined/> : 
                         followers.map( item => {
                             return (
-                                <>
+                                <Avatar.Group>
                                     <Tooltip title={item.login}>
                                         <a href={item.html_url} target='_blank' rel='noreferrer'>
-                                            <FollowerPics src={item.avatar_url} alt=''/>
+                                            <Avatar src={item.avatar_url} alt=''/>
                                         </a>
                                     </Tooltip>
-                                </>
+                                </Avatar.Group>
                             )
                         })}
+                        {/* <Pagination simple defaultPageSize={28} total={80} /> */}
                     </FollowersPanel>
-                    <Panel header={`Following: ${user.following}`}> Placeholder </Panel>
+                    <FollowersPanel header={`Following: ${user.following}`}>
+                        {loading2 ? <LoadingOutlined/> : 
+                        following.map( item => {
+                            return (
+                                <Avatar.Group>
+                                    <Tooltip title={item.login}>
+                                        <a href={item.html_url} target='_blank' rel='noreferrer'>
+                                            <Avatar src={item.avatar_url} alt=''/>
+                                        </a>
+                                    </Tooltip>
+                                </Avatar.Group>
+                            )
+                        })} 
+                    </FollowersPanel>
                 </Followers>
             </div>
             <h2>Employment Status:{user.hireable ? 'Open To Work' : ''}</h2>
