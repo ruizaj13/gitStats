@@ -14,7 +14,7 @@ function App() {
       <Switch>
         <Route exact path='/' component={LandingPage}/>
         <Route exact path='/userStats' component={UserStats}/>
-        <Route exact path='/404' component={NotFound}/>
+        <Route exact path='/fuck' component={NotFound}/>
       </Switch>
         <Particles params={particleStyle}/>
     </>

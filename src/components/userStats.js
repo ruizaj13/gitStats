@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 import Styled from 'styled-components';
 import { connect } from 'react-redux';
 import ghpolyglot from 'gh-polyglot';
@@ -26,14 +27,19 @@ margin-bottom: 0%;
 `
 
 
-const UserStats = ({ user }) => {
+const UserStats = ({ user, error }) => {
     const [stats, setStats] = useState()
     const [followers, setFollowers] = useState()
     const [following, setFollowing] = useState()
     const [loading, setLoading] = useState(true);
     const [loading2, setLoading2] = useState(true);
+    const {push} = useHistory()
     console.log(user)
     
+    useEffect(() => {
+        error ? push('/fuck') : push('/userStats')
+    }, [error])
+
 
     useEffect( () => {
         axios
@@ -45,7 +51,7 @@ const UserStats = ({ user }) => {
         .catch( err => {
             console.log(err.message)
         })
-    }, [user.login]);
+    }, [user]);
 
     useEffect( () => {
         axios
@@ -57,7 +63,7 @@ const UserStats = ({ user }) => {
         .catch( err => {
             console.log(err.message)
         })
-    }, [user.login]);
+    }, [user]);
 
 
     useEffect(() => {
@@ -141,7 +147,7 @@ const UserStats = ({ user }) => {
 }
 
 const mapStateToProps = state => {
-    return {user: state.user}
+    return {user: state.user, error: state.error}
 }
 
 export default connect(mapStateToProps)(UserStats);

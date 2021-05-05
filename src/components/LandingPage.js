@@ -35,7 +35,7 @@ const LandingPage = props => {
     const handleSubmit = (e) => {
         e.preventDefault()
         props.getUser(formData)
-        props.error ? push('/404') : push('/userStats') 
+        push('/userStats')
         setFormData('')
     }
 
