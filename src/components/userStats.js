@@ -7,6 +7,7 @@ import ghpolyglot from 'gh-polyglot';
 import { Collapse, Tooltip, Pagination, Avatar, Badge, Card } from 'antd';
 import { LoadingOutlined, GlobalOutlined, MailOutlined } from '@ant-design/icons';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
+import DoughnutChart from './Charts/DoughnutChart';
 
 const { Panel } = Collapse;
 
@@ -35,13 +36,15 @@ const UserStats = ({ user, error }) => {
     const [loading2, setLoading2] = useState(true);
     const {push} = useHistory()
     console.log(user)
-    
-    useEffect(() => {
-        if (user.login === undefined){
-            push('/NotFound')
-        }
-    }, [])
 
+    // useEffect( () => {
+    //     const check =() => {
+    //         if (user.login === undefined){
+    //             push('/NotFound')
+    //         }
+    //     }
+    //     check()
+    // },[user.login])
 
     useEffect( () => {
         axios
@@ -67,23 +70,19 @@ const UserStats = ({ user, error }) => {
         })
     }, [user.login]);
 
-
     useEffect(() => {
         const me = new ghpolyglot(`${user.login}`)
-
-        me.userStats(function(err, stats){
-        console.log(err||stats)
+        me.userStats((err, stats) => {
+        // console.log(err||stats)
         setStats(stats)
         }) 
     }, [user.login]);
- 
-    // console.log(stats)
-    // console.log(followers)
+    console.log(stats)
 
     return (
         <div style={{width:'21%', height:'100vh', backgroundColor:'rgba(0,0,0,0.14)'}}>
             <a href={`${user.html_url}`} target='_blank' rel='noreferrer'>
-                <Badge count={`@${user.login}`} offset={[-106, 260]} size={'default'} >
+                <Badge count={`@${user.login}`} offset={[-106, 260]} size={'default'} style={{backgroundColor:'#4183C4'}} >
                     <Avatar src={user.avatar_url} alt='' size={264} style={{
                         marginTop: '2%', 
                         marginLeft: '10%',
@@ -126,7 +125,6 @@ const UserStats = ({ user, error }) => {
                                 </Avatar.Group>
                             )
                         })}
-                        {/* <Pagination simple defaultPageSize={28} total={80} /> */}
                     </FollowersPanel>
                     <FollowersPanel header={`Following: ${user.following}`}>
                         {loading2 ? <LoadingOutlined/> : 
@@ -144,6 +142,7 @@ const UserStats = ({ user, error }) => {
                     </FollowersPanel>
                 </Followers>
             </div>
+            <DoughnutChart/>
         </div>
     )
 }
