@@ -37,7 +37,7 @@ const UserStats = ({ user, error }) => {
     console.log(user)
     
     useEffect(() => {
-        error ? push('/fuck') : push('/userStats')
+        error ? push('/NotFound') : push('/userStats')
     }, [error])
 
 
