@@ -3,30 +3,26 @@ import axios from 'axios';
 import Styled from 'styled-components';
 import { connect } from 'react-redux';
 import ghpolyglot from 'gh-polyglot';
-import { Collapse, Tooltip, Pagination, Avatar } from 'antd';
-import { LoadingOutlined, UserOutlined } from '@ant-design/icons';
+import { Collapse, Tooltip, Pagination, Avatar, Badge, Card } from 'antd';
+import { LoadingOutlined, GlobalOutlined, MailOutlined } from '@ant-design/icons';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 
 const { Panel } = Collapse;
 
-const Username = Styled.h1`
-margin-left: 3%;
-font-size: 200%;
-font-style: bold;
-`
-
 const Followers = Styled(Collapse)`
-width: 16.95%;
-margin-left: 1%;
+width: 68.95%;
+margin-left: 15%;
+margin-top: 5%;
+background-color: white;
 `
 const FollowersPanel = Styled(Panel)`
 display: flex;
 flex-direction: column;
 margin: 2%;
 `
-
-const FollowerPics = Styled.img`
-width: 20%;
-margin: 2%;
+const PersonalInfo = Styled.h2`
+margin-left: 15%;
+margin-bottom: 0%;
 `
 
 
@@ -73,13 +69,40 @@ const UserStats = ({ user }) => {
         }) 
     }, [user.login]);
  
-    console.log(stats)
-    console.log(followers)
+    // console.log(stats)
+    // console.log(followers)
 
     return (
-        <>
-            <Avatar src={user.avatar_url} alt='' size={264} style={{marginTop: '1%', marginLeft: '1%'}} />
-            <Username>@{user.login}</Username>
+        <div style={{width:'21%', height:'100vh', backgroundColor:'rgba(0,0,0,0.14)'}}>
+            <a href={`${user.html_url}`} target='_blank' rel='noreferrer'>
+                <Badge count={`@${user.login}`} offset={[-106, 260]} size={'default'} >
+                    <Avatar src={user.avatar_url} alt='' size={264} style={{
+                        marginTop: '2%', 
+                        marginLeft: '10%',
+                        marginBottom:'5%'
+                        }}/>
+                </Badge>
+            </a>
+            {user.location ?
+                <PersonalInfo>
+                    <LocationOnIcon/> {user.location} 
+                </PersonalInfo> :
+                <></>
+            }
+            { user.blog ? 
+                <PersonalInfo>
+                    <a href={`${user.blog}`} target='_blank' rel='noreferrer' style={{color: 'black'}}>
+                        <GlobalOutlined/> {user.blog} 
+                    </a>
+                </PersonalInfo> :
+                <></>
+            }
+            { user.email ?  
+                <PersonalInfo>
+                    <MailOutlined/> {user.email} 
+                </PersonalInfo> :
+                <></> 
+            }            
             <div>
                 <Followers accordion>
                     <FollowersPanel header={`Followers: ${user.followers}`} forceRender={'true'}>
@@ -113,9 +136,7 @@ const UserStats = ({ user }) => {
                     </FollowersPanel>
                 </Followers>
             </div>
-            <h2>Employment Status:{user.hireable ? 'Open To Work' : ''}</h2>
-            <h2>Location: {user.location}</h2>
-        </>
+        </div>
     )
 }
 
