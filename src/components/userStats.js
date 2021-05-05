@@ -37,8 +37,10 @@ const UserStats = ({ user, error }) => {
     console.log(user)
     
     useEffect(() => {
-        error ? push('/NotFound') : push('/userStats')
-    }, [error])
+        if (user.login === undefined){
+            push('/NotFound')
+        }
+    }, [])
 
 
     useEffect( () => {
@@ -51,7 +53,7 @@ const UserStats = ({ user, error }) => {
         .catch( err => {
             console.log(err.message)
         })
-    }, [user]);
+    }, [user.login]);
 
     useEffect( () => {
         axios
@@ -63,7 +65,7 @@ const UserStats = ({ user, error }) => {
         .catch( err => {
             console.log(err.message)
         })
-    }, [user]);
+    }, [user.login]);
 
 
     useEffect(() => {
