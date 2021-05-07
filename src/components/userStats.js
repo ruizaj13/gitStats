@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import Styled from 'styled-components';
 import { connect } from 'react-redux';
-import ghpolyglot from 'gh-polyglot';
 import { Collapse, Tooltip, Pagination, Avatar, Badge, Card } from 'antd';
 import { LoadingOutlined, GlobalOutlined, MailOutlined } from '@ant-design/icons';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
@@ -26,10 +25,19 @@ const PersonalInfo = Styled.h2`
 margin-left: 15%;
 margin-bottom: 0%;
 `
+const SideBar = Styled.div`
+width: 21%;
+height:100vh; 
+background-color: rgba(0,0,0,0.14);
+`
+const User = Styled(Avatar)`
+margin-top: 2%; 
+margin-left: 10%;
+margin-bottom: 5%;
+`
 
 
 const UserStats = ({ user, error }) => {
-    const [stats, setStats] = useState()
     const [followers, setFollowers] = useState()
     const [following, setFollowing] = useState()
     const [loading, setLoading] = useState(true);
@@ -70,24 +78,13 @@ const UserStats = ({ user, error }) => {
         })
     }, [user.login]);
 
-    useEffect(() => {
-        const me = new ghpolyglot(`${user.login}`)
-        me.userStats((err, stats) => {
-        // console.log(err||stats)
-        setStats(stats)
-        }) 
-    }, [user.login]);
-    console.log(stats)
 
     return (
-        <div style={{width:'21%', height:'100vh', backgroundColor:'rgba(0,0,0,0.14)'}}>
+        <>
+        <SideBar>
             <a href={`${user.html_url}`} target='_blank' rel='noreferrer'>
                 <Badge count={`@${user.login}`} offset={[-106, 260]} size={'default'} style={{backgroundColor:'#4183C4'}} >
-                    <Avatar src={user.avatar_url} alt='' size={264} style={{
-                        marginTop: '2%', 
-                        marginLeft: '10%',
-                        marginBottom:'5%'
-                        }}/>
+                    <User src={user.avatar_url} alt='' size={264}/>
                 </Badge>
             </a>
             {user.location ?
@@ -142,8 +139,11 @@ const UserStats = ({ user, error }) => {
                     </FollowersPanel>
                 </Followers>
             </div>
-            <DoughnutChart/>
-        </div>
+        </SideBar>
+
+        <DoughnutChart/>
+
+        </>
     )
 }
 

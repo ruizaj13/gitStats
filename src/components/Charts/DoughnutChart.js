@@ -1,37 +1,66 @@
-import React from 'react';
-import { Doughnut } from 'react-chartjs-2';
+import React, { useState, useEffect} from 'react';
+import ghpolyglot from 'gh-polyglot';
+import { connect } from 'react-redux';
+import { LoadingOutlined } from '@ant-design/icons';
 
-const data = {
-  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-  datasets: [
-    {
-      label: '# of Votes',
-      data: [12, 19, 3, 5, 2, 3],
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(255, 206, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-      ],
-      borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)',
-      ],
-      borderWidth: 1,
-    },
-  ],
+import { Doughnut } from 'react-chartjs-2';
+import Styled from 'styled-components';
+
+const Chart = Styled.div`
+background-color: rgba(255, 255, 255, 0.9);
+border: 2px solid rgba(0, 0, 0, 0.1);
+border-radius: 2%;
+padding-top: 1.5%;
+margin-top: -51%;
+margin-left: 23%;
+width: 20%;
+height: 45vh;
+`
+const Spinner = Styled(LoadingOutlined)`
+margin-left: 40%;
+margin-top: 40%;
+font-size: 320%;
+`
+
+
+
+const DoughnutChart = ({user}) => {
+    const [stats, setStats] = useState()
+    const [loading, setLoading] = useState(true);
+    
+    useEffect(() => {
+        const me = new ghpolyglot(`${user.login}`)
+        me.userStats((err, stats) => {
+            setStats(stats)
+            //setTimeout is needed to allow loading time for proper rendering
+            setTimeout(() => {
+                setLoading(false)
+              }, 1500)
+        }) 
+    }, [user.login]);
+    console.log(stats)
+    
+    return (
+        <Chart>
+            { loading ? <Spinner/> : 
+            <Doughnut data={{
+                labels: stats.map(item => `${item.label}`),
+                datasets: [
+                    {
+                        data: stats.map(item => `${item.value}`),
+                        backgroundColor: stats.map(item => `${item.color}`),
+                        borderWidth: 1,
+                    },
+                ],
+            }}/>
+            }
+        </Chart>
+    )
 };
 
-const DoughnutChart = () => (
-  <div>
-    <Doughnut data={data} />
-  </div>
-);
+const mapStateToProps = state => {
+    return {user: state.user, error: state.error}
+}
 
-export default DoughnutChart;
+export default connect(mapStateToProps)(DoughnutChart);
+
