@@ -3,13 +3,15 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import Styled from 'styled-components';
 import { connect } from 'react-redux';
-import { Collapse, Tooltip, Pagination, Avatar, Badge, Card } from 'antd';
-import { LoadingOutlined, GlobalOutlined, MailOutlined } from '@ant-design/icons';
+import { Collapse, Tooltip, Pagination, Avatar, Badge, Typography, Affix} from 'antd';
+import { LoadingOutlined, GlobalOutlined, MailOutlined, TwitterOutlined } from '@ant-design/icons';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
+import WorkIcon from '@material-ui/icons/Work';
 import DoughnutChart from './Charts/DoughnutChart';
 // import ghpolyglot from 'gh-polyglot';
 import GitHubCalendar from 'react-github-calendar';
 import ReactTooltip from 'react-tooltip';
+import Title from 'antd/lib/skeleton/Title';
 
 const { Panel } = Collapse;
 
@@ -47,6 +49,10 @@ background-color: rgba(255, 255, 255, 0.9);
 border-radius: 10px;
 `
 
+const BuiltWith = Styled.div`
+margin-left: 15%;
+`
+
 // const GhCalendar = Styled.div`
 // margin-left: 25%;
 // margin-top: 1%;
@@ -61,18 +67,8 @@ const UserStats = ({ user, error }) => {
     const [following, setFollowing] = useState()
     const [loading, setLoading] = useState(true);
     const [loading2, setLoading2] = useState(true);
-    // const [test, setTest] = useState()
-    const {push} = useHistory()
-    console.log(user)
-
-    // useEffect(() => {
-    //     const me = new ghpolyglot(`${user.login}`)
-    //     me.repoStats((err, stats) => {
-    //         console.log(err || stats);
-    //     }) 
-    // }, [user.login]);
-    // console.log(test)
-
+    const { push } = useHistory();
+    const { Title, Paragraph } = Typography;
 
     useEffect( () => {
         const check =() => {
@@ -110,65 +106,94 @@ const UserStats = ({ user, error }) => {
 
     return (
         <>
-        <SideBar>
-            <a href={`${user.html_url}`} target='_blank' rel='noreferrer'>
-                <Badge count={`@${user.login}`} offset={[-106, 260]} size={'default'} style={{backgroundColor:'#4183C4'}} >
-                    <User src={user.avatar_url} alt='' size={264}/>
-                </Badge>
-            </a>
-            {user.location ?
-                <PersonalInfo>
-                    <LocationOnIcon/> {user.location} 
-                </PersonalInfo> :
-                <></>
-            }
-            { user.blog ? 
-                <PersonalInfo>
-                    <a href={`${user.blog}`} target='_blank' rel='noreferrer' style={{color: 'black'}}>
-                        <GlobalOutlined/> {user.blog} 
+            <Affix>
+                <SideBar>
+                    <a href={`${user.html_url}`} target='_blank' rel='noreferrer'>
+                        <Badge count={`@${user.login}`} offset={[-106, 260]} size={'default'} style={{backgroundColor:'#4183C4'}} >
+                            <User src={user.avatar_url} alt='' size={264}/>
+                        </Badge>
                     </a>
-                </PersonalInfo> :
-                <></>
-            }
-            { user.email ?  
-                <PersonalInfo>
-                    <MailOutlined/> {user.email} 
-                </PersonalInfo> :
-                <></> 
-            }            
-            <div>
-                <Followers accordion>
-                    <FollowersPanel header={`Followers: ${user.followers}`} forceRender={'true'}>
-                        {loading ? <LoadingOutlined/> : 
-                        followers.map( item => {
-                            return (
-                                <Avatar.Group>
-                                    <Tooltip title={item.login}>
-                                        <a href={item.html_url} target='_blank' rel='noreferrer'>
-                                            <Avatar src={item.avatar_url} alt=''/>
-                                        </a>
-                                    </Tooltip>
-                                </Avatar.Group>
-                            )
-                        })}
-                    </FollowersPanel>
-                    <FollowersPanel header={`Following: ${user.following}`}>
-                        {loading2 ? <LoadingOutlined/> : 
-                        following.map( item => {
-                            return (
-                                <Avatar.Group>
-                                    <Tooltip title={item.login}>
-                                        <a href={item.html_url} target='_blank' rel='noreferrer'>
-                                            <Avatar src={item.avatar_url} alt=''/>
-                                        </a>
-                                    </Tooltip>
-                                </Avatar.Group>
-                            )
-                        })} 
-                    </FollowersPanel>
-                </Followers>
-            </div>
-        </SideBar>
+                    {user.company ?
+                        <PersonalInfo>
+                            <WorkIcon/> {user.company} 
+                        </PersonalInfo> :
+                        <></>
+                    }
+                    {user.location ?
+                        <PersonalInfo>
+                            <LocationOnIcon/> {user.location} 
+                        </PersonalInfo> :
+                        <></>
+                    }
+                    { user.email ?  
+                        <PersonalInfo>
+                            <MailOutlined/> {user.email} 
+                        </PersonalInfo> :
+                        <></> 
+                    }       
+                    { user.blog ? 
+                        <PersonalInfo>
+                            <a href={`${user.blog}`} target='_blank' rel='noreferrer' style={{color: 'black'}}>
+                                <GlobalOutlined/> {user.blog} 
+                            </a>
+                        </PersonalInfo> :
+                        <></>
+                    }
+                    { user.twitter_username ? 
+                        <PersonalInfo>
+                            <a href={`https://www.twitter.com/${user.twitter_username}`} target='_blank' rel='noreferrer' style={{color: 'black'}}>
+                                <TwitterOutlined/> {user.twitter_username} 
+                            </a>
+                        </PersonalInfo> :
+                        <></>
+                    }
+    
+                    <div>
+                        <Followers accordion>
+                            <FollowersPanel header={`Followers: ${user.followers}`} forceRender={'true'}>
+                                {loading ? <LoadingOutlined/> : 
+                                followers.map( item => {
+                                    return (
+                                        <Avatar.Group>
+                                            <Tooltip title={item.login}>
+                                                <a href={item.html_url} target='_blank' rel='noreferrer'>
+                                                    <Avatar src={item.avatar_url} alt=''/>
+                                                </a>
+                                            </Tooltip>
+                                        </Avatar.Group>
+                                    )
+                                })}
+                            </FollowersPanel>
+                            <FollowersPanel header={`Following: ${user.following}`}>
+                                {loading2 ? <LoadingOutlined/> : 
+                                following.map( item => {
+                                    return (
+                                        <Avatar.Group>
+                                            <Tooltip title={item.login}>
+                                                <a href={item.html_url} target='_blank' rel='noreferrer'>
+                                                    <Avatar src={item.avatar_url} alt=''/>
+                                                </a>
+                                            </Tooltip>
+                                        </Avatar.Group>
+                                    )
+                                })} 
+                            </FollowersPanel>
+                        </Followers>
+                    </div>
+                    <BuiltWith>
+                        <Title level={4}> Built With: </Title>
+                        <ul>
+                            <li>React.JS</li>
+                            <li>Ant Design</li>
+                            <li>Material-UI</li>
+                            <li>Github Polyglot</li>
+                            <li>React Chart.JS 2 / Chart.JS</li>
+                            <li>Styled Components</li>
+                        </ul>
+                        <p>And More!</p>
+                    </BuiltWith>
+                </SideBar>
+            </Affix>
         <DoughnutChart/>
         {/* <GhCalendar> */}
             <GitHubCalendar username={user.login} color="hsl(203, 82%, 33%)" Tooltips='true' fontSize= {16} blockSize={17} blockMargin={3} style={{
