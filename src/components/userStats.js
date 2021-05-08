@@ -34,6 +34,12 @@ const SideBar = Styled.div`
 width: 21%;
 height:100vh; 
 background-color: rgba(0,0,0,0.14);
+overflow-y: hidden;
+position:fixed;
+left:0;
+top:0;
+right: 0;
+z-index: 1000;
 `
 const User = Styled(Avatar)`
 margin-top: 2%; 
@@ -43,8 +49,8 @@ margin-bottom: 5%;
 
 const StatCard = Styled.img`
 margin-left: 23%;
-margin-top: -54.4%;
-width: 54.5%;
+margin-top: -54.5%;
+width: 54.8%;
 background-color: rgba(255, 255, 255, 0.9);
 border-radius: 10px;
 `
@@ -106,13 +112,13 @@ const UserStats = ({ user, error }) => {
 
     return (
         <>
-            <Affix>
+            <Affix style={{postion:'fixed', left:'0'}}>
                 <SideBar>
-                    <a href={`${user.html_url}`} target='_blank' rel='noreferrer'>
                         <Badge count={`@${user.login}`} offset={[-106, 260]} size={'default'} style={{backgroundColor:'#4183C4'}} >
-                            <User src={user.avatar_url} alt='' size={264}/>
+                            <a href={`${user.html_url}`} target='_blank' rel='noreferrer'>
+                                <User src={user.avatar_url} alt='' size={264}/>
+                            </a>
                         </Badge>
-                    </a>
                     {user.company ?
                         <PersonalInfo>
                             <WorkIcon/> {user.company} 
@@ -147,7 +153,7 @@ const UserStats = ({ user, error }) => {
                         </PersonalInfo> :
                         <></>
                     }
-    
+
                     <div>
                         <Followers accordion>
                             <FollowersPanel header={`Followers: ${user.followers}`} forceRender={'true'}>
@@ -181,14 +187,38 @@ const UserStats = ({ user, error }) => {
                         </Followers>
                     </div>
                     <BuiltWith>
-                        <Title level={4}> Built With: </Title>
+                        <Title level={4} style={{marginBottom:'-.5%'}}> Built With: </Title>
                         <ul>
-                            <li>React.JS</li>
-                            <li>Ant Design</li>
-                            <li>Material-UI</li>
-                            <li>Github Polyglot</li>
-                            <li>React Chart.JS 2 / Chart.JS</li>
-                            <li>Styled Components</li>
+                            <li>
+                                <a href='https://reactjs.org/' target='_blank' rel='noreferrer'>
+                                    React.JS
+                                </a>
+                            </li>
+                            <li>
+                                <a href='https://ant.design/' target='_blank' rel='noreferrer'>
+                                    Ant Design
+                                </a>
+                            </li>
+                            <li>
+                                <a href='https://material-ui.com/' target='_blank' rel='noreferrer'>
+                                    Material-UI
+                                </a>
+                            </li>
+                            <li>
+                                <a href='https://github.com/IonicaBizau/node-gh-polyglot' target='_blank' rel='noreferrer'>
+                                    Github Polyglot
+                                </a>
+                            </li>
+                            <li>
+                                <a href='https://github.com/reactchartjs/react-chartjs-2' target='_blank' rel='noreferrer'>
+                                    React Chart.JS 2 / Chart.JS
+                                </a>
+                            </li>
+                            <li>
+                                <a href='https://styled-components.com/' target='_blank' rel='noreferrer'>
+                                    Styled Components
+                                </a>
+                            </li>
                         </ul>
                         <p>And More!</p>
                     </BuiltWith>
@@ -199,7 +229,7 @@ const UserStats = ({ user, error }) => {
             <GitHubCalendar username={user.login} color="hsl(203, 82%, 33%)" Tooltips='true' fontSize= {16} blockSize={17} blockMargin={3} style={{
                 width:'75%', 
                 marginLeft:'23%', 
-                marginTop:'.5%', 
+                marginTop:'1%', 
                 paddingLeft:'3.8%', 
                 paddingTop:'1.1%', 
                 paddingBottom:'0.1%', 
