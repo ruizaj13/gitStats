@@ -39,6 +39,14 @@ margin-left: 10%;
 margin-bottom: 5%;
 `
 
+const StatCard = Styled.img`
+margin-left: 23%;
+margin-top: -54.4%;
+width: 54.5%;
+background-color: rgba(255, 255, 255, 0.9);
+border-radius: 10px;
+`
+
 // const GhCalendar = Styled.div`
 // margin-left: 25%;
 // margin-top: 1%;
@@ -163,7 +171,7 @@ const UserStats = ({ user, error }) => {
         </SideBar>
         <DoughnutChart/>
         {/* <GhCalendar> */}
-            <GitHubCalendar username="ruizaj13" color="hsl(203, 82%, 33%)" Tooltips='true' fontSize= {16} blockSize={17} blockMargin={3} style={{
+            <GitHubCalendar username={user.login} color="hsl(203, 82%, 33%)" Tooltips='true' fontSize= {16} blockSize={17} blockMargin={3} style={{
                 width:'75%', 
                 marginLeft:'23%', 
                 marginTop:'.5%', 
@@ -172,11 +180,11 @@ const UserStats = ({ user, error }) => {
                 paddingBottom:'0.1%', 
                 backgroundColor:'rgba(255, 255, 255, 0.9)', 
                 border: '2px solid rgba(0, 0, 0, 0.1)',
-                borderRadius: '15px'
+                borderRadius: '10px'
                 }}>
                 <ReactTooltip delayShow={50} html />
-            </GitHubCalendar>     
-        {/* </GhCalendar>                */}
+            </GitHubCalendar>
+            <StatCard  alt="github stats" src={`https://readme-stats-eta-three.vercel.app/api?username=${user.login}&bg_color=00000000&show_icons=true&include_all_commits=true&count_private=true`} /> 
         </>
     )
 }

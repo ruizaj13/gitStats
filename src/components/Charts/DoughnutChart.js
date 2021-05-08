@@ -10,12 +10,12 @@ import Styled from 'styled-components';
 const Chart = Styled.div`
 background-color: rgba(255, 255, 255, 0.9);
 border: 2px solid rgba(0, 0, 0, 0.1);
-border-radius: 15px;
+border-radius: 10px;
 padding-top: 1.5%;
 margin-top: -51%;
-margin-left: 23%;
-width: 20%;
-height: 45vh;
+margin-left: 78%;
+width: 19.9%;
+height: 41.5vh;
 `
 const Spinner = Styled(LoadingOutlined)`
 margin-left: 40%;
@@ -45,7 +45,7 @@ const DoughnutChart = ({user}) => {
     
     return (
         <Chart>
-            <Title level={4} style={{marginLeft:'28%', marginTop:'-6%', marginBottom:'0.9%'}}>Top Languages</Title>
+            <Title level={5} style={{marginLeft:'31%', marginTop:'-7.5%', marginBottom:'-1.5%'}}>Top Languages</Title>
             { loading ? <Spinner/> : 
             <Doughnut data={{
                 labels: stats.map(item => `${item.label}`),
