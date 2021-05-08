@@ -7,6 +7,9 @@ import { Collapse, Tooltip, Pagination, Avatar, Badge, Card } from 'antd';
 import { LoadingOutlined, GlobalOutlined, MailOutlined } from '@ant-design/icons';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import DoughnutChart from './Charts/DoughnutChart';
+// import ghpolyglot from 'gh-polyglot';
+import GitHubCalendar from 'react-github-calendar';
+import ReactTooltip from 'react-tooltip';
 
 const { Panel } = Collapse;
 
@@ -36,27 +39,45 @@ margin-left: 10%;
 margin-bottom: 5%;
 `
 
+// const GhCalendar = Styled.div`
+// margin-left: 25%;
+// margin-top: 1%;
+// padding: 10%;
+// width: 70%;
+// background-color: red;
+// `
+
 
 const UserStats = ({ user, error }) => {
     const [followers, setFollowers] = useState()
     const [following, setFollowing] = useState()
     const [loading, setLoading] = useState(true);
     const [loading2, setLoading2] = useState(true);
+    // const [test, setTest] = useState()
     const {push} = useHistory()
     console.log(user)
 
-    // useEffect( () => {
-    //     const check =() => {
-    //         if (user.login === undefined){
-    //             push('/NotFound')
-    //         }
-    //     }
-    //     check()
-    // },[user.login])
+    // useEffect(() => {
+    //     const me = new ghpolyglot(`${user.login}`)
+    //     me.repoStats((err, stats) => {
+    //         console.log(err || stats);
+    //     }) 
+    // }, [user.login]);
+    // console.log(test)
+
+
+    useEffect( () => {
+        const check =() => {
+            if (error){
+                push('/NotFound')
+            }
+        }
+        check()
+    },[error])
 
     useEffect( () => {
         axios
-        .get(`https://api.github.com/users/${user.login}/followers`)
+        .get(`${user.followers_url}`)
         .then( res => {
             setFollowers(res.data)
             setLoading(false)
@@ -140,9 +161,22 @@ const UserStats = ({ user, error }) => {
                 </Followers>
             </div>
         </SideBar>
-
         <DoughnutChart/>
-
+        {/* <GhCalendar> */}
+            <GitHubCalendar username="ruizaj13" color="hsl(203, 82%, 33%)" Tooltips='true' fontSize= {16} blockSize={17} blockMargin={3} style={{
+                width:'75%', 
+                marginLeft:'23%', 
+                marginTop:'.5%', 
+                paddingLeft:'3.8%', 
+                paddingTop:'1.1%', 
+                paddingBottom:'0.1%', 
+                backgroundColor:'rgba(255, 255, 255, 0.9)', 
+                border: '2px solid rgba(0, 0, 0, 0.1)',
+                borderRadius: '15px'
+                }}>
+                <ReactTooltip delayShow={50} html />
+            </GitHubCalendar>     
+        {/* </GhCalendar>                */}
         </>
     )
 }
