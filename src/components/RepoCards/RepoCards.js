@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Styled from 'styled-components';
+import QueueAnim from 'rc-queue-anim';
 import { connect } from 'react-redux';
 import { Typography, Card, Col, Row, Menu, Dropdown } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
@@ -38,8 +39,8 @@ border-radius: 10px;
 
 const RepoCards = ({ user }) => {
     const [repos, setRepos] = useState();
-    const [sort, setSort] = useState('Pushed');
-    const [direction, setDirection] = useState('Desc');
+    const [sort, setSort] = useState('pushed');
+    const [direction, setDirection] = useState('desc');
     const [loading, setLoading] = useState(true);
     const { Title } = Typography;
 
@@ -53,15 +54,15 @@ const RepoCards = ({ user }) => {
       
     const sortMenu = (
       <Menu onClick={onClickSort}>
-        <Menu.Item key="Created">Created</Menu.Item>
-        <Menu.Item key="Updated">Updated</Menu.Item>
-        <Menu.Item key="Pushed">Pushed</Menu.Item>
+        <Menu.Item key="created">Created</Menu.Item>
+        <Menu.Item key="updated">Updated</Menu.Item>
+        <Menu.Item key="pushed">Pushed</Menu.Item>
       </Menu>
     );
     const directionMenu = (
       <Menu onClick={onClickDirection}>
-        <Menu.Item key="Asc">Asc</Menu.Item>
-        <Menu.Item key="Desc">Desc</Menu.Item>
+        <Menu.Item key="asc">asc</Menu.Item>
+        <Menu.Item key="desc">desc</Menu.Item>
       </Menu>
     );
 
@@ -87,12 +88,12 @@ const RepoCards = ({ user }) => {
                 <Title level={3}>User Repos</Title>
                 <Dropdown overlay={sortMenu}>
                     <a style={{color:'black'}} onClick={e => e.preventDefault()}> {/* eslint-disable-line  */}
-                        {sort} <DownOutlined />
+                        {sort.charAt(0).toUpperCase()+ sort.slice(1)} <DownOutlined />
                     </a>
                 </Dropdown>
                 <Dropdown overlay={directionMenu}>
                     <a style={{color:'black'}} onClick={e => e.preventDefault()}> {/* eslint-disable-line  */}
-                        {direction} <DownOutlined />
+                        {direction.charAt(0).toUpperCase()+ direction.slice(1)} <DownOutlined />
                     </a>
                 </Dropdown>
             </Sorting>
@@ -102,9 +103,11 @@ const RepoCards = ({ user }) => {
                         return (
                             <Row>
                                 <Col>
-                                    <Cards title={repo.name}>
+                                <QueueAnim type={['right', 'left']} ease={['easeOutQuart', 'easeInOutQuart']}>
+                                    <Cards title={repo.name} key={repo.id}>
                                         <p>{repo.language}</p>
                                     </Cards>
+                                </QueueAnim>    
                                 </Col>
                             </Row>
                         )
