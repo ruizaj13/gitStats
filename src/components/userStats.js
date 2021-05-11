@@ -12,6 +12,8 @@ import DoughnutChart from './Charts/DoughnutChart';
 import GitHubCalendar from 'react-github-calendar';
 import ReactTooltip from 'react-tooltip';
 import Title from 'antd/lib/skeleton/Title';
+import GitHubColors from 'github-colors';
+// var GitHubColors = require("github-colors");
 
 const { Panel } = Collapse;
 
@@ -49,7 +51,7 @@ margin-bottom: 5%;
 
 const StatCard = Styled.img`
 margin-left: 23%;
-margin-top: -54.5%;
+margin-top: -54.9%;
 width: 54.8%;
 background-color: rgba(255, 255, 255, 0.9);
 border-radius: 10px;
@@ -77,7 +79,7 @@ const UserStats = ({ user, error }) => {
     const [loading3, setLoading3] = useState(true);
     const { push } = useHistory();
     const { Title, Paragraph } = Typography;
-
+   
     useEffect( () => {
         const check =() => {
             if (error){
@@ -141,6 +143,11 @@ const UserStats = ({ user, error }) => {
         <Menu.Item key="5">Desc</Menu.Item>
       </Menu>
     );
+
+    useEffect( () => {
+        // GitHubColors.init(true)
+        console.log(GitHubColors.get('C++', true))
+    }, [])
 
     //sorts: created, updated, pushed
     //directions: asc, desc
@@ -284,7 +291,7 @@ const UserStats = ({ user, error }) => {
                     </a>
                 </Dropdown>
             </div>
-            <div style={{ display:'flex', flexDirection:'row', flexWrap: 'wrap', justifyContent:'space-evenly', width:'75%', marginLeft:'23%', paddingBottom:'4%'}}>
+            <div style={{ display:'flex', flexDirection:'row', flexWrap: 'wrap', justifyContent:'space-evenly', width:'75%', marginLeft:'23%', paddingBottom:'3%'}}>
                 {loading3 ? <></> :
                     repos.slice(0,6).map(repo => {
                         return (
