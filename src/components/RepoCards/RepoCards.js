@@ -34,9 +34,6 @@ border: 2px solid rgba(0, 0, 0, 0.1);
 border-radius: 10px;
 `
 
-
-
-
 const RepoCards = ({ user }) => {
     const [repos, setRepos] = useState();
     const [sort, setSort] = useState('pushed');

@@ -1,19 +1,21 @@
 import React from 'react';
 import Styled from 'styled-components';
-import { Typography } from 'antd';
+import { Collapse } from 'antd';
 
-const BuiltWithList = Styled.div`
+const BuiltWithList = Styled(Collapse)`
 margin-left: 15%;
+width: 68.95%;
 `
 
 const BuiltWith = () => {
-    const { Title } = Typography;
+    const { Panel } = Collapse;
 
 
     return (
         <>
             <BuiltWithList>
-                <Title level={4} style={{marginBottom:'-.5%'}}> Built With: </Title>
+                <Panel header={'Built With'}>
+                {/* <Title level={4} style={{marginBottom:'-.5%'}}> Built With: </Title> */}
                 <ul>
                     <li>
                         <a href='https://reactjs.org/' target='_blank' rel='noreferrer'>
@@ -47,6 +49,7 @@ const BuiltWith = () => {
                     </li>
                 </ul>
                 <p>And More!</p>
+                </Panel>
             </BuiltWithList>
         </>
     )
