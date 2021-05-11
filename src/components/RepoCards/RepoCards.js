@@ -3,8 +3,10 @@ import axios from 'axios';
 import Styled from 'styled-components';
 import QueueAnim from 'rc-queue-anim';
 import { connect } from 'react-redux';
-import { Typography, Card, Col, Row, Menu, Dropdown } from 'antd';
+import { Typography, Card, Col, Row, Menu, Dropdown, Divider } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
+import GitHubColors from 'github-colors';
+
 
 const Sorting = Styled.div`
 display: flex; 
@@ -14,8 +16,9 @@ justify-content: space-between;
 width: 17%; 
 height: 4vh;
 margin-left: 23%;
-/* margin-right:615%; */
+font-family:'Share Tech';
 `
+
 const Repos = Styled.div`
 display: flex; 
 flex-direction: row; 
@@ -24,7 +27,9 @@ justify-content: space-evenly;
 width: 75%;  
 margin-left: 23%; 
 padding-bottom: 3%;
+font-family:'Share Tech';
 `
+
 const Cards = Styled(Card)`
 width: 375px; 
 height: 25vh; 
@@ -36,6 +41,7 @@ border-radius: 10px;
 
 const RepoCards = ({ user }) => {
     const [repos, setRepos] = useState();
+    const [repoLang, setRepoLang] = useState();
     const [sort, setSort] = useState('pushed');
     const [direction, setDirection] = useState('desc');
     const [loading, setLoading] = useState(true);
@@ -78,9 +84,14 @@ const RepoCards = ({ user }) => {
     }, [user.repos_url, sort, direction]);
 
    
+    // useEffect( () => {
+    //     // GitHubColors.init(true)
+    //     console.log(GitHubColors.get(`${repos.language}`, true))
+    // }, [loading])
 
     return (
         <>
+            <Divider orientation="left">
             <Sorting>
                 <Title level={3}>User Repos</Title>
                 <Dropdown overlay={sortMenu}>
@@ -94,6 +105,7 @@ const RepoCards = ({ user }) => {
                     </a>
                 </Dropdown>
             </Sorting>
+            </Divider>
             <Repos>
                 {loading ? <></> :
                     repos.slice(0,6).map(repo => {

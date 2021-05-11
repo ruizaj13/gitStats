@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Styled from 'styled-components';
@@ -7,7 +7,6 @@ import GitHubCalendar from 'react-github-calendar';
 import SideBar from './SideBar/SideBar';
 import RepoCards from './RepoCards/RepoCards';
 import ReactTooltip from 'react-tooltip';
-import GitHubColors from 'github-colors';
 
 
 const StatCard = Styled.img`
@@ -16,18 +15,11 @@ margin-top: -54.9%;
 width: 54.8%;
 background-color: rgba(255, 255, 255, 0.9);
 border-radius: 10px;
+font-family:'Share Tech';
 `
 
 
-const UserStats = ({ user, error }) => {
-
-
-    // useEffect( () => {
-    //     // GitHubColors.init(true)
-    //     console.log(GitHubColors.get('C++', true))
-    // }, [])
-
-
+const UserStats = ({ user }) => {
 
     return (
         <>
@@ -42,7 +34,8 @@ const UserStats = ({ user, error }) => {
                 paddingBottom:'0.1%', 
                 backgroundColor:'rgba(255, 255, 255, 0.9)', 
                 border: '2px solid rgba(0, 0, 0, 0.1)',
-                borderRadius: '10px'
+                borderRadius: '10px',
+                fontFamily:'Share Tech'
                 }}>
                 <ReactTooltip delayShow={50} html />
             </GitHubCalendar>

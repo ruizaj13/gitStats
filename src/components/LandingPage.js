@@ -14,6 +14,7 @@ const useStyles = makeStyles({
         width: '30%',
         marginLeft: '50%',
         marginTop: '26%',
+        fontFamily:'Share Tech'
     },
     img: {
         width: '40%',

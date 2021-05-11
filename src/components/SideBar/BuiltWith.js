@@ -5,6 +5,8 @@ import { Collapse } from 'antd';
 const BuiltWithList = Styled(Collapse)`
 margin-left: 15%;
 width: 68.95%;
+background-color: rgba(255, 255, 255, 0.9);
+border: 1px solid rgba(0, 0, 0, 0.1);
 `
 
 const BuiltWith = () => {
@@ -14,8 +16,7 @@ const BuiltWith = () => {
     return (
         <>
             <BuiltWithList>
-                <Panel header={'Built With'}>
-                {/* <Title level={4} style={{marginBottom:'-.5%'}}> Built With: </Title> */}
+                <Panel header={'Built With'} style={{}}>
                 <ul>
                     <li>
                         <a href='https://reactjs.org/' target='_blank' rel='noreferrer'>
@@ -25,11 +26,6 @@ const BuiltWith = () => {
                     <li>
                         <a href='https://ant.design/' target='_blank' rel='noreferrer'>
                             Ant Design
-                        </a>
-                    </li>
-                    <li>
-                        <a href='https://material-ui.com/' target='_blank' rel='noreferrer'>
-                            Material-UI
                         </a>
                     </li>
                     <li>

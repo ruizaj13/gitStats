@@ -1,20 +1,23 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import BuiltWith from './BuiltWith';
+import RequestCounter from './RequestCounter'
 import Styled from 'styled-components';
 import { connect } from 'react-redux';
 import { Collapse, Tooltip, Avatar, Badge } from 'antd';
 import { LoadingOutlined, GlobalOutlined, MailOutlined, TwitterOutlined } from '@ant-design/icons';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import WorkIcon from '@material-ui/icons/Work';
+import OctoCat from '../../assets/octocat.gif';
+
 
 const { Panel } = Collapse;
 
 const Followers = Styled(Collapse)`
 width: 68.95%;
 margin-left: 15%;
-margin-top: 5%;
-background-color: white;
+margin-top: 2%;
+background-color:rgba(255, 255, 255, 0.9);
 `
 const FollowersPanel = Styled(Panel)`
 display: flex;
@@ -35,6 +38,7 @@ left:0;
 top:0;
 right: 0;
 z-index: 1000;
+font-family:'Share Tech';
 `
 const User = Styled(Avatar)`
 margin-top: 2%; 
@@ -43,8 +47,8 @@ margin-bottom: 5%;
 `
 
 const SideBar = ({ user }) => {
-    const [followers, setFollowers] = useState()
-    const [following, setFollowing] = useState()
+    const [followers, setFollowers] = useState();
+    const [following, setFollowing] = useState();
     const [loading, setLoading] = useState(true);
     const [loading2, setLoading2] = useState(true);
 
@@ -115,15 +119,15 @@ const SideBar = ({ user }) => {
                     <></>
                 }
                 <div>
-                    <Followers accordion>
+                    <Followers  accordion>
                         <FollowersPanel header={`Followers: ${user.followers}`} forceRender={'true'}>
                             {loading ? <LoadingOutlined/> : 
                             followers.map( item => {
                                 return (
                                     <Avatar.Group>
-                                        <Tooltip title={item.login}>
+                                        <Tooltip title={item.login} style={{fontFamily:'Share Tech'}}>
                                             <a href={item.html_url} target='_blank' rel='noreferrer'>
-                                                <Avatar src={item.avatar_url} alt=''/>
+                                                <Avatar src={item.avatar_url} alt='' style={{fontFamily:'Share Tech'}}/>
                                             </a>
                                         </Tooltip>
                                     </Avatar.Group>
@@ -145,8 +149,13 @@ const SideBar = ({ user }) => {
                             })} 
                         </FollowersPanel>
                     </Followers>
+                    <BuiltWith/>
                 </div>
-            <BuiltWith/>  
+                <RequestCounter/>
+                    <a href='https://github.com/ruizaj13/gitStats' target='_blank' rel='noreferrer'>
+                        <img src={OctoCat} alt='octocat' style={{width:'40%', marginLeft:'30%', marginTop:'-11%'}}/>
+                    </a>
+
             </Side>
         </>
     )

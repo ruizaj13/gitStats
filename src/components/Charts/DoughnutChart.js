@@ -8,6 +8,7 @@ import { Doughnut } from 'react-chartjs-2';
 import Styled from 'styled-components';
 
 const Chart = Styled.div`
+font-family:'Share Tech';
 background-color: rgba(255, 255, 255, 0.9);
 border: 2px solid rgba(0, 0, 0, 0.1);
 border-radius: 10px;
