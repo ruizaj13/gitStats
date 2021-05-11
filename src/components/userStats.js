@@ -22,13 +22,12 @@ border-radius: 10px;
 const UserStats = ({ user, error }) => {
 
 
-    useEffect( () => {
-        // GitHubColors.init(true)
-        console.log(GitHubColors.get('C++', true))
-    }, [])
+    // useEffect( () => {
+    //     // GitHubColors.init(true)
+    //     console.log(GitHubColors.get('C++', true))
+    // }, [])
 
-    //sorts: created, updated, pushed
-    //directions: asc, desc
+
 
     return (
         <>
