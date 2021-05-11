@@ -3,51 +3,16 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import Styled from 'styled-components';
 import { connect } from 'react-redux';
-import { Collapse, Tooltip, Pagination, Avatar, Badge, Typography, Card, Col, Row, Menu, Dropdown, message} from 'antd';
-import { LoadingOutlined, GlobalOutlined, MailOutlined, TwitterOutlined, DownOutlined } from '@ant-design/icons';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import WorkIcon from '@material-ui/icons/Work';
+import { Typography, Card, Col, Row, Menu, Dropdown, message} from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 import DoughnutChart from './Charts/DoughnutChart';
-// import ghpolyglot from 'gh-polyglot';
 import GitHubCalendar from 'react-github-calendar';
 import ReactTooltip from 'react-tooltip';
 import Title from 'antd/lib/skeleton/Title';
 import GitHubColors from 'github-colors';
 // var GitHubColors = require("github-colors");
+import SideBar from './SideBar/SideBar';
 
-const { Panel } = Collapse;
-
-const Followers = Styled(Collapse)`
-width: 68.95%;
-margin-left: 15%;
-margin-top: 5%;
-background-color: white;
-`
-const FollowersPanel = Styled(Panel)`
-display: flex;
-flex-direction: column;
-margin: 2%;
-`
-const PersonalInfo = Styled.h2`
-margin-left: 15%;
-margin-bottom: 0%;
-`
-const SideBar = Styled.div`
-width: 21%;
-height:100vh; 
-background-color: rgba(0,0,0,0.14);
-overflow-y: hidden;
-position:fixed;
-left:0;
-top:0;
-right: 0;
-z-index: 1000;
-`
-const User = Styled(Avatar)`
-margin-top: 2%; 
-margin-left: 10%;
-margin-bottom: 5%;
-`
 
 const StatCard = Styled.img`
 margin-left: 23%;
@@ -57,28 +22,12 @@ background-color: rgba(255, 255, 255, 0.9);
 border-radius: 10px;
 `
 
-const BuiltWith = Styled.div`
-margin-left: 15%;
-`
-
-// const GhCalendar = Styled.div`
-// margin-left: 25%;
-// margin-top: 1%;
-// padding: 10%;
-// width: 70%;
-// background-color: red;
-// `
-
 
 const UserStats = ({ user, error }) => {
     const [repos, setRepos] = useState()
-    const [followers, setFollowers] = useState()
-    const [following, setFollowing] = useState()
-    const [loading, setLoading] = useState(true);
-    const [loading2, setLoading2] = useState(true);
     const [loading3, setLoading3] = useState(true);
     const { push } = useHistory();
-    const { Title, Paragraph } = Typography;
+    const { Title } = Typography;
    
     useEffect( () => {
         const check =() => {
@@ -89,29 +38,6 @@ const UserStats = ({ user, error }) => {
         check()
     },[error])
 
-    useEffect( () => {
-        axios
-        .get(`${user.followers_url}`)
-        .then( res => {
-            setFollowers(res.data)
-            setLoading(false)
-        })
-        .catch( err => {
-            console.log(err.message)
-        })
-    }, [user.login]);
-
-    useEffect( () => {
-        axios
-        .get(`https://api.github.com/users/${user.login}/following`)
-        .then( res => {
-            setFollowing(res.data)
-            setLoading2(false)
-        })
-        .catch( err => {
-            console.log(err.message)
-        })
-    }, [user.login]);
 
     useEffect( () => {
         axios
@@ -154,115 +80,7 @@ const UserStats = ({ user, error }) => {
 
     return (
         <>
-            <SideBar>
-                    <Badge count={`@${user.login}`} offset={[-106, 260]} size={'default'} style={{backgroundColor:'#4183C4'}} >
-                        <a href={`${user.html_url}`} target='_blank' rel='noreferrer'>
-                            <User src={user.avatar_url} alt='' size={264}/>
-                        </a>
-                    </Badge>
-                {user.company ?
-                    <PersonalInfo>
-                        <WorkIcon/> {user.company} 
-                    </PersonalInfo> :
-                    <></>
-                }
-                {user.location ?
-                    <PersonalInfo>
-                        <LocationOnIcon/> {user.location} 
-                    </PersonalInfo> :
-                    <></>
-                }
-                { user.email ?  
-                    <PersonalInfo>
-                        <MailOutlined/> {user.email} 
-                    </PersonalInfo> :
-                    <></> 
-                }       
-                { user.blog ? 
-                    <PersonalInfo>
-                        <a href={`${user.blog}`} target='_blank' rel='noreferrer' style={{color: 'black'}}>
-                            <GlobalOutlined/> {user.blog} 
-                        </a>
-                    </PersonalInfo> :
-                    <></>
-                }
-                { user.twitter_username ? 
-                    <PersonalInfo>
-                        <a href={`https://www.twitter.com/${user.twitter_username}`} target='_blank' rel='noreferrer' style={{color: 'black'}}>
-                            <TwitterOutlined/> {user.twitter_username} 
-                        </a>
-                    </PersonalInfo> :
-                    <></>
-                }
-                <div>
-                    <Followers accordion>
-                        <FollowersPanel header={`Followers: ${user.followers}`} forceRender={'true'}>
-                            {loading ? <LoadingOutlined/> : 
-                            followers.map( item => {
-                                return (
-                                    <Avatar.Group>
-                                        <Tooltip title={item.login}>
-                                            <a href={item.html_url} target='_blank' rel='noreferrer'>
-                                                <Avatar src={item.avatar_url} alt=''/>
-                                            </a>
-                                        </Tooltip>
-                                    </Avatar.Group>
-                                )
-                            })}
-                        </FollowersPanel>
-                        <FollowersPanel header={`Following: ${user.following}`}>
-                            {loading2 ? <LoadingOutlined/> : 
-                            following.map( item => {
-                                return (
-                                    <Avatar.Group>
-                                        <Tooltip title={item.login}>
-                                            <a href={item.html_url} target='_blank' rel='noreferrer'>
-                                                <Avatar src={item.avatar_url} alt=''/>
-                                            </a>
-                                        </Tooltip>
-                                    </Avatar.Group>
-                                )
-                            })} 
-                        </FollowersPanel>
-                    </Followers>
-                </div>
-                <BuiltWith>
-                    <Title level={4} style={{marginBottom:'-.5%'}}> Built With: </Title>
-                    <ul>
-                        <li>
-                            <a href='https://reactjs.org/' target='_blank' rel='noreferrer'>
-                                React.JS
-                            </a>
-                        </li>
-                        <li>
-                            <a href='https://ant.design/' target='_blank' rel='noreferrer'>
-                                Ant Design
-                            </a>
-                        </li>
-                        <li>
-                            <a href='https://material-ui.com/' target='_blank' rel='noreferrer'>
-                                Material-UI
-                            </a>
-                        </li>
-                        <li>
-                            <a href='https://github.com/IonicaBizau/node-gh-polyglot' target='_blank' rel='noreferrer'>
-                                Github Polyglot
-                            </a>
-                        </li>
-                        <li>
-                            <a href='https://github.com/reactchartjs/react-chartjs-2' target='_blank' rel='noreferrer'>
-                                React Chart.JS 2 / Chart.JS
-                            </a>
-                        </li>
-                        <li>
-                            <a href='https://styled-components.com/' target='_blank' rel='noreferrer'>
-                                Styled Components
-                            </a>
-                        </li>
-                    </ul>
-                    <p>And More!</p>
-                </BuiltWith>
-            </SideBar>
+            <SideBar/>
             <DoughnutChart/>
             <GitHubCalendar username={user.login} color="hsl(203, 82%, 33%)" Tooltips='true' fontSize= {16} blockSize={17} blockMargin={3} style={{
                 width:'75%', 
