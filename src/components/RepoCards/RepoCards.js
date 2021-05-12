@@ -63,7 +63,7 @@ const RepoCards = ({ user }) => {
 
     useEffect( () => {
         axios
-        .get(`${user.repos_url}?sort=${sort}&direction=${direction}`)
+        .get(`https://api.github.com/users/${user.login}/repos?sort=${sort}&direction=${direction}`)
         .then( res => {
             setRepos(res.data)
             setLoading(false)
