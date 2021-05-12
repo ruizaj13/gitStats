@@ -71,7 +71,7 @@ const RepoCards = ({ user }) => {
         .catch( err => {
             console.log(err.message)
         })
-    }, [user.repos_url, sort, direction]);
+    }, [user.repos_url, user.login, sort, direction]);
 
     return (
         <>
