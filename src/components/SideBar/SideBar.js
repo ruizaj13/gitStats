@@ -62,7 +62,7 @@ const SideBar = ({ user }) => {
         .catch( err => {
             console.log(err.message)
         })
-    }, [user.login]);
+    }, [user.followers_url]);
 
     useEffect( () => {
         axios
