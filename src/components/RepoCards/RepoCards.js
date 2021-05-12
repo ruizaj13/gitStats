@@ -3,8 +3,8 @@ import axios from 'axios';
 import Styled from 'styled-components';
 import QueueAnim from 'rc-queue-anim';
 import { connect } from 'react-redux';
-import { Typography, Card, Col, Row, Menu, Dropdown, Divider } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import { Typography, Card, Col, Row, Menu, Dropdown, Badge } from 'antd';
+import { DownOutlined, ForkOutlined, StarOutlined, BranchesOutlined } from '@ant-design/icons';
 import GitHubColors from 'github-colors';
 
 
@@ -46,6 +46,7 @@ const RepoCards = ({ user }) => {
     const [direction, setDirection] = useState('desc');
     const [loading, setLoading] = useState(true);
     const { Title } = Typography;
+    const { Meta } = Card;
 
     const onClickSort = ({ key }) => {
         setSort(`${key}`);
@@ -64,8 +65,8 @@ const RepoCards = ({ user }) => {
     );
     const directionMenu = (
       <Menu onClick={onClickDirection}>
-        <Menu.Item key="asc">asc</Menu.Item>
-        <Menu.Item key="desc">desc</Menu.Item>
+        <Menu.Item key="asc">Asc</Menu.Item>
+        <Menu.Item key="desc">Desc</Menu.Item>
       </Menu>
     );
 
@@ -84,14 +85,13 @@ const RepoCards = ({ user }) => {
     }, [user.repos_url, sort, direction]);
 
    
-    // useEffect( () => {
-    //     // GitHubColors.init(true)
-    //     console.log(GitHubColors.get(`${repos.language}`, true))
-    // }, [loading])
+    useEffect( () => {
+        // GitHubColors.init(true)
+        console.log(GitHubColors.get('Python', true))
+    }, [])
 
     return (
         <>
-            <Divider orientation="left">
             <Sorting>
                 <Title level={3}>User Repos</Title>
                 <Dropdown overlay={sortMenu}>
@@ -105,7 +105,6 @@ const RepoCards = ({ user }) => {
                     </a>
                 </Dropdown>
             </Sorting>
-            </Divider>
             <Repos>
                 {loading ? <></> :
                     repos.slice(0,6).map(repo => {
@@ -114,7 +113,20 @@ const RepoCards = ({ user }) => {
                                 <Col>
                                 <QueueAnim type={['right', 'left']} ease={['easeOutQuart', 'easeInOutQuart']}>
                                     <Cards title={repo.name} key={repo.id}>
-                                        <p>{repo.language}</p>
+                                        <Meta avatar={ <BranchesOutlined/> } style={{position:'absolute',marginTop:'-16.5%', marginLeft:'-4.6%'}}/>
+                                        <Title level={5} style={{position:'absolute'}}>{repo.description}</Title>
+                                        <div style={{display:'flex', justifyContent:'space-between'}}>
+                                            <div style={{display:'flex', marginTop:'25%'}}>
+                                                <Badge color={GitHubColors.get(`${repo.language}`, true).color}/>
+                                                {GitHubColors.get(`${repo.language}`) === undefined ? <p>N/A</p> : <p>{repo.language}</p>}
+                                            </div>
+                                            <div style={{display:'flex', alignItems:'baseline', marginTop:'25%', marginLeft:'-10%'}}>
+                                                <StarOutlined style={{marginRight:'15%'}}/><p>{repo.stargazers_count}</p>
+                                            </div>
+                                            <div style={{display:'flex', alignItems:'baseline' ,marginTop:'25%', marginRight:'30%'}}>
+                                                <ForkOutlined style={{marginRight:'15%'}}/><p>{repo.forks_count}</p>
+                                            </div>
+                                        </div>
                                     </Cards>
                                 </QueueAnim>    
                                 </Col>
