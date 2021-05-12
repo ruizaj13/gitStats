@@ -54,7 +54,7 @@ const SideBar = ({ user }) => {
 
     useEffect( () => {
         axios
-        .get(`${user.followers_url}`)
+        .get(`https://api.github.com/users/${user.login}/followers`)
         .then( res => {
             setFollowers(res.data)
             setLoading(false)
