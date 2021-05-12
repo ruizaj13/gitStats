@@ -4,7 +4,7 @@ import Styled from 'styled-components';
 import QueueAnim from 'rc-queue-anim';
 import { connect } from 'react-redux';
 import { Typography, Card, Col, Row, Menu, Dropdown, Badge } from 'antd';
-import { DownOutlined, ForkOutlined, StarOutlined, BranchesOutlined } from '@ant-design/icons';
+import { DownOutlined, ForkOutlined, StarOutlined, BranchesOutlined, LinkOutlined } from '@ant-design/icons';
 import GitHubColors from 'github-colors';
 
 
@@ -95,7 +95,7 @@ const RepoCards = ({ user }) => {
                             <Row key={repo.id}>
                                 <Col >
                                 <QueueAnim type={['right', 'left']} ease={['easeOutQuart', 'easeInOutQuart']}>
-                                    <Card title={repo.name} key={repo.id} style={{
+                                    <Card title={repo.name} extra={<a href={repo.html_url} target='_blank' rel='noreferrer'><LinkOutlined /></a>} key={repo.id} style={{
                                         width: '375px', 
                                         height: '25vh', 
                                         marginTop: '5%', 
