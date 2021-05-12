@@ -43,7 +43,6 @@ const DoughnutChart = ({user}) => {
               }, 1500)
         }) 
     }, [user.login]);
-    console.log(stats)
     
     return (
         <Chart>

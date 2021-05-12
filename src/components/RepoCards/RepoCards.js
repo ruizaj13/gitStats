@@ -30,18 +30,17 @@ padding-bottom: 3%;
 font-family:'Share Tech';
 `
 
-const Cards = Styled(Card)`
-width: 375px; 
-height: 25vh; 
-margin-top: 5%; 
-background-color: rgba(255, 255, 255, 0.9);
-border: 2px solid rgba(0, 0, 0, 0.1); 
-border-radius: 10px;
-`
+// const Cards = Styled(Card)`
+// width: 375px; 
+// height: 25vh; 
+// margin-top: 5%; 
+// background-color: rgba(255, 255, 255, 0.9);
+// border: 2px solid rgba(0, 0, 0, 0.1); 
+// border-radius: 10px;
+// `
 
 const RepoCards = ({ user }) => {
     const [repos, setRepos] = useState();
-    const [repoLang, setRepoLang] = useState();
     const [sort, setSort] = useState('pushed');
     const [direction, setDirection] = useState('desc');
     const [loading, setLoading] = useState(true);
@@ -77,18 +76,11 @@ const RepoCards = ({ user }) => {
         .then( res => {
             setRepos(res.data)
             setLoading(false)
-            console.log(repos)
         })
         .catch( err => {
             console.log(err.message)
         })
     }, [user.repos_url, sort, direction]);
-
-   
-    useEffect( () => {
-        // GitHubColors.init(true)
-        console.log(GitHubColors.get('Python', true))
-    }, [])
 
     return (
         <>
@@ -109,10 +101,17 @@ const RepoCards = ({ user }) => {
                 {loading ? <></> :
                     repos.slice(0,6).map(repo => {
                         return (
-                            <Row>
-                                <Col>
+                            <Row key={repo.id}>
+                                <Col >
                                 <QueueAnim type={['right', 'left']} ease={['easeOutQuart', 'easeInOutQuart']}>
-                                    <Cards title={repo.name} key={repo.id}>
+                                    <Card title={repo.name} key={repo.id} style={{
+                                        width: '375px', 
+                                        height: '25vh', 
+                                        marginTop: '5%', 
+                                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                                        border: '2px solid rgba(0, 0, 0, 0.1)', 
+                                        borderRadius: '10px'
+                                    }}>
                                         <Meta avatar={ <BranchesOutlined/> } style={{position:'absolute',marginTop:'-16.5%', marginLeft:'-4.6%'}}/>
                                         <Title level={5} style={{position:'absolute'}}>{repo.description}</Title>
                                         <div style={{display:'flex', justifyContent:'space-between'}}>
@@ -127,7 +126,7 @@ const RepoCards = ({ user }) => {
                                                 <ForkOutlined style={{marginRight:'15%'}}/><p>{repo.forks_count}</p>
                                             </div>
                                         </div>
-                                    </Cards>
+                                    </Card>
                                 </QueueAnim>    
                                 </Col>
                             </Row>

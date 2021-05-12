@@ -1,5 +1,4 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Styled from 'styled-components';
 import DoughnutChart from './Charts/DoughnutChart';

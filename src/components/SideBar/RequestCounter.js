@@ -17,7 +17,6 @@ const RequestCounter = () => {
             })
     },[])
 
-    console.log(count)
     return (
         <>
             <Card style={{width:'68.95%', height: '6vh', margin:'15%', marginTop:'1.5%', border: '1px solid rgba(0, 0, 0, 0.1)', backgroundColor: 'rgba(255, 255, 255, 0.9)'}}>

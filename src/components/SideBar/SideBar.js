@@ -124,7 +124,7 @@ const SideBar = ({ user }) => {
                             {loading ? <LoadingOutlined/> : 
                             followers.map( item => {
                                 return (
-                                    <Avatar.Group>
+                                    <Avatar.Group key={item.id}>
                                         <Tooltip title={item.login} style={{fontFamily:'Share Tech'}}>
                                             <a href={item.html_url} target='_blank' rel='noreferrer'>
                                                 <Avatar src={item.avatar_url} alt='' style={{fontFamily:'Share Tech'}}/>
@@ -138,10 +138,10 @@ const SideBar = ({ user }) => {
                             {loading2 ? <LoadingOutlined/> : 
                             following.map( item => {
                                 return (
-                                    <Avatar.Group>
+                                    <Avatar.Group key={item.id}>
                                         <Tooltip title={item.login}>
                                             <a href={item.html_url} target='_blank' rel='noreferrer'>
-                                                <Avatar src={item.avatar_url} alt=''/>
+                                                <Avatar src={item.avatar_url} alt='' key={item.id} style={{fontFamily:'Share Tech'}}/>
                                             </a>
                                         </Tooltip>
                                     </Avatar.Group>
