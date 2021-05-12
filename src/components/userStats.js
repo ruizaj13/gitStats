@@ -25,7 +25,7 @@ const UserStats = ({ user, error }) => {
 
     return (
         <>
-            {error === 'Request failed with status code 404' ?
+            {error ?
                 <NotFound/> :
                 <>
                 <SideBar/>
