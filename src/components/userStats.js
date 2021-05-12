@@ -6,7 +6,7 @@ import GitHubCalendar from 'react-github-calendar';
 import SideBar from './SideBar/SideBar';
 import RepoCards from './RepoCards/RepoCards';
 import ReactTooltip from 'react-tooltip';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
 
 
@@ -21,13 +21,13 @@ font-family:'Share Tech';
 
 
 const UserStats = ({ user, error }) => {
-    const {push} = useHistory()
+    // const {push} = useHistory()
 
-    useEffect(() => {
-        if (error === 'Request failed with status code 404' || 'Request failed with status code 403' ){
-            push('/NotFound')
-        }
-    })
+    // useEffect(() => {
+    //     if (error === 'Request failed with status code 404' || 'Request failed with status code 403' ){
+    //         push('/NotFound')
+    //     }
+    // })
 
     return (
         <>
