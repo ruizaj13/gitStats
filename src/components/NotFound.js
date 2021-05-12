@@ -1,5 +1,4 @@
 import React from 'react';
-// import axios from 'axios';
 import { connect } from 'react-redux'
 
 import Styled from 'styled-components';
@@ -23,19 +22,6 @@ height: 71vh;
 `
 
 const NotFound = ({error}) => {
-    // const [limitHit, setLimitHit] = useState()
-
-
-    // useEffect(() => {
-    //     axios
-    //         .get('https://api.github.com/rate_limit')
-    //         .then(res => {
-    //             console.log(res.data.rate.remaining)
-    //             if (res.data.rate.remaining === 0) {
-    //                 setLimitHit(true)
-    //             }
-    //         })
-    // })
 
 
     return (

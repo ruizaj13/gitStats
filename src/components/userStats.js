@@ -1,4 +1,4 @@
-import React  from 'react';
+import React, { useEffect }  from 'react';
 import { connect } from 'react-redux';
 import Styled from 'styled-components';
 import DoughnutChart from './Charts/DoughnutChart';
@@ -6,7 +6,7 @@ import GitHubCalendar from 'react-github-calendar';
 import SideBar from './SideBar/SideBar';
 import RepoCards from './RepoCards/RepoCards';
 import ReactTooltip from 'react-tooltip';
-
+import { useHistory } from 'react-router-dom';
 
 
 const StatCard = Styled.img`
@@ -20,6 +20,13 @@ font-family:'Share Tech';
 
 
 const UserStats = ({ user, error }) => {
+    const { push } = useHistory()
+
+    useEffect(() => {
+        if (error.message === 'Request failed with status code 404' ) {
+            push('/NotFound')
+        }
+    }])
 
 
     return (
