@@ -10,6 +10,7 @@ overflow-y: hidden;
 const Message = Styled.h1`
 margin-left: 40%;
 margin-top: 15%;
+font-family:'Share Tech';
 `
 
 const Travolta = Styled.img`

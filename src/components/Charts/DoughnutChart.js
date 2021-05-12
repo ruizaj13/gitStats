@@ -13,7 +13,6 @@ background-color: rgba(255, 255, 255, 0.9);
 border: 2px solid rgba(0, 0, 0, 0.1);
 border-radius: 10px;
 padding-top: 1.5%;
-/* margin-top: 1em; */
 margin-bottom: -.5%;
 margin-left: 78%; 
 width: 19.9%;
