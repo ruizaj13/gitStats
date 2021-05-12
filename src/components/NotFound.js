@@ -26,7 +26,7 @@ const NotFound = ({error}) => {
 
     return (
         <Page>
-            {error.message === 'Request failed with status code 403' ? <Message>API Limit Has Been Reached</Message> : <Message>User Not Found</Message>}
+            {error === 'Request failed with status code 403' ? <Message>API Limit Has Been Reached</Message> : <Message>User Not Found</Message>}
             <Travolta src={Img} alt='confused john travolta'/>
         </Page>
     )
