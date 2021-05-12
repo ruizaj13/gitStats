@@ -1,5 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import axios from 'axios';
+import React from 'react';
+// import axios from 'axios';
+import { connect } from 'react-redux'
+
 import Styled from 'styled-components';
 
 import Img from '../assets/AccurateUnfinishedBergerpicard-size_restricted.gif';
@@ -20,28 +22,32 @@ margin-top: -3.8%;
 height: 71vh;
 `
 
-const NotFound = () => {
-    const [limitHit, setLimitHit] = useState()
+const NotFound = ({error}) => {
+    // const [limitHit, setLimitHit] = useState()
 
 
-    useEffect(() => {
-        axios
-            .get('https://api.github.com/rate_limit')
-            .then(res => {
-                console.log(res.data.rate.remaining)
-                if (res.data.rate.remaining === 0) {
-                    setLimitHit(true)
-                }
-            })
-    })
+    // useEffect(() => {
+    //     axios
+    //         .get('https://api.github.com/rate_limit')
+    //         .then(res => {
+    //             console.log(res.data.rate.remaining)
+    //             if (res.data.rate.remaining === 0) {
+    //                 setLimitHit(true)
+    //             }
+    //         })
+    // })
 
 
     return (
         <Page>
-            {limitHit ? <Message>API Limit Has Been Reached</Message> : <Message>Nothing To See Here</Message>}
+            {error.message === 'Request failed with status code 403' ? <Message>API Limit Has Been Reached</Message> : <Message>Nothing To See Here</Message>}
             <Travolta src={Img} alt='confused john travolta'/>
         </Page>
     )
 }
 
-export default NotFound;
+const mapStateToProps = state => {
+    return {user: { ...state.user }, error: state.error}
+}
+
+export default connect(mapStateToProps)(NotFound)

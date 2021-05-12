@@ -14,8 +14,7 @@ export const getUser = userName => dispatch => {
         })
         .catch( err => {
             dispatch({ type: FETCHING_ERROR, payload: err.message})
-            if (err.message === 'Request failed with status code 404' || 'Request failed with status code 403' ){
-                push('/NotFound')
-            }
+            push('/NotFound')
+            
         })
 }
