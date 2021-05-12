@@ -9,6 +9,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import GitHubIcon from '@material-ui/icons/GitHub'
 import img from '../assets/octocat.gif'
 
+
+
 const useStyles = makeStyles({
     input: {
         width: '30%',
@@ -29,6 +31,7 @@ const LandingPage = props => {
     const {push} = useHistory()
     const classes = useStyles()
 
+
     const handleChange = (e) => {
         setFormData(e.target.value)
     }
@@ -36,7 +39,12 @@ const LandingPage = props => {
     const handleSubmit = (e) => {
         e.preventDefault()
         props.getUser(formData)
-        push('/userStats')
+        if (props.error === 'Request failed with status code 404' || 'Request failed with status code 403' ){
+                    push('/NotFound')
+                }
+        else {
+            push('/userStats')
+        }
         setFormData('')
     }
 
