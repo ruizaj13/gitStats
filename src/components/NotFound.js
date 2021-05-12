@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import axios from 'axios';
 import Styled from 'styled-components';
 
 import Img from '../assets/AccurateUnfinishedBergerpicard-size_restricted.gif';
@@ -20,9 +21,24 @@ height: 71vh;
 `
 
 const NotFound = () => {
+    const [limitHit, setLimitHit] = useState()
+
+
+    useEffect(() => {
+        axios
+            .get('https://api.github.com/rate_limit')
+            .then(res => {
+                console.log(res.data.rate.remaining)
+                if (res.data.rate.remaining === 0) {
+                    setLimitHit(true)
+                }
+            })
+    })
+
+
     return (
         <Page>
-            <Message>Nothing To See Here</Message>
+            {limitHit ? <Message>API Limit Has Been Reached</Message> : <Message>Nothing To See Here</Message>}
             <Travolta src={Img} alt='confused john travolta'/>
         </Page>
     )

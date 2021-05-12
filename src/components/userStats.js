@@ -22,9 +22,9 @@ font-family:'Share Tech';
 
 const UserStats = ({ user, error }) => {
     const {push} = useHistory()
-    // console.log(error)
+
     useEffect(() => {
-        if (error === 'Request failed with status code 404'){
+        if (error === 'Request failed with status code 404' || 'Request failed with status code 403' ){
             push('/NotFound')
         }
     }, [error, push])
