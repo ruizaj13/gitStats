@@ -39,12 +39,7 @@ const LandingPage = props => {
     const handleSubmit = (e) => {
         e.preventDefault()
         props.getUser(formData)
-        if (props.error === 'Request failed with status code 404' || 'Request failed with status code 403' ){
-                    push('/NotFound')
-                }
-        else {
-            push('/userStats')
-        }
+        push('/userStats')
         setFormData('')
     }
 
