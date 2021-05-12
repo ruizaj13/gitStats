@@ -30,15 +30,6 @@ padding-bottom: 3%;
 font-family:'Share Tech';
 `
 
-// const Cards = Styled(Card)`
-// width: 375px; 
-// height: 25vh; 
-// margin-top: 5%; 
-// background-color: rgba(255, 255, 255, 0.9);
-// border: 2px solid rgba(0, 0, 0, 0.1); 
-// border-radius: 10px;
-// `
-
 const RepoCards = ({ user }) => {
     const [repos, setRepos] = useState();
     const [sort, setSort] = useState('pushed');
