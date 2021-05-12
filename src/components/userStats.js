@@ -27,7 +27,7 @@ const UserStats = ({ user, error }) => {
         if (error === 'Request failed with status code 404' || 'Request failed with status code 403' ){
             push('/NotFound')
         }
-    }, [error, push])
+    })
 
     return (
         <>
