@@ -47,7 +47,7 @@ const LandingPage = props => {
         <div>
             <form onSubmit={handleSubmit}>
                 <Fade in={true} timeout={3000}>
-                    <TextField  name='username' className = {classes.input} label='username' onChange={handleChange} value={formData} InputProps={{
+                    <TextField  name='username' className = {classes.input} label='username' onChange={handleChange} autoComplete='off' value={formData} InputProps={{
                         startAdornment: (
                             <InputAdornment position='start'>
                                 <GitHubIcon/>
