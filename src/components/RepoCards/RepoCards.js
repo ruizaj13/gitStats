@@ -76,7 +76,7 @@ const RepoCards = ({ user }) => {
     return (
         <>
             <Sorting>
-                <Title level={3}>User Repos</Title>
+                <Title level={3}>Top Repos</Title>
                 <Dropdown overlay={sortMenu}>
                     <a style={{color:'black'}} onClick={e => e.preventDefault()}> {/* eslint-disable-line  */}
                         {sort.charAt(0).toUpperCase()+ sort.slice(1)} <DownOutlined />
